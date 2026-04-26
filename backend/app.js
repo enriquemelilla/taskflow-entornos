@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const initDatabase = require("./database/init");
 const categoryRoutes = require("./routes/categoryRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/categories", categoryRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
