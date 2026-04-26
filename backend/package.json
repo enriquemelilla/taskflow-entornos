@@ -1,0 +1,14 @@
+{
+  "name": "taskflow-backend",
+  "version": "1.0.0",
+  "description": "Backend de la aplicación TaskFlow para Entornos de Desarrollo",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Enrique Reyes Dominguez a29671",
+  "license": "ISC",
+  "dependencies": {
+    "sqlite3": "^6.0.1"
+  }
+}
