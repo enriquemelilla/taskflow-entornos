@@ -35,11 +35,11 @@ function getCategoryById(req, res) {
 function createCategory(req, res) {
   const { name, description } = req.body;
 
-  if (!name || name.trim() === "") {
+ /*  if (!name || name.trim() === "") {
     return res.status(400).json({
       error: "El nombre de la categoría es obligatorio"
-    });
-  }
+    }); 
+  }*/
 
   categoryModel.createCategory(name.trim(), description || null, (error, result) => {
     if (error) {
