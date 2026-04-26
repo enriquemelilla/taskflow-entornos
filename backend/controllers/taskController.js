@@ -36,39 +36,39 @@ function getTaskById(req, res) {
 function createTask(req, res) {
   const { title, description, status, due_date, category_id } = req.body;
 
-  if (!title || title.trim() === "") {
+  /* if (!title || title.trim() === "") {
     return res.status(400).json({
       error: "El título de la tarea es obligatorio"
     });
-  }
+  } */
 
   const validStatus = ["pendiente", "en progreso", "completada"];
   const finalStatus = status || "pendiente";
 
-  if (!validStatus.includes(finalStatus)) {
+  /* if (!validStatus.includes(finalStatus)) {
     return res.status(400).json({
       error: "El estado de la tarea no es válido"
-    });
-  }
+    }); 
+  } */ 
 
-  if (category_id === undefined || category_id === null || category_id === "") {
+  /* if (category_id === undefined || category_id === null || category_id === "") {
     return res.status(400).json({
       error: "La categoría es obligatoria"
     });
-  }
+  } */
 
-  categoryModel.getCategoryById(category_id, (categoryError, category) => {
+  /* categoryModel.getCategoryById(category_id, (categoryError, category) => {
     if (categoryError) {
       return res.status(500).json({
         error: "Error al comprobar la categoría"
       });
     }
-
-    if (!category) {
+ */
+    /* if (!category) {
       return res.status(404).json({
         error: "La categoría indicada no existe"
       });
-    }
+    } */
 
     taskModel.createTask(
       title.trim(),
@@ -88,8 +88,7 @@ function createTask(req, res) {
           task: result
         });
       }
-    );
-  });
+    ); 
 }
 
 function updateTask(req, res) {
