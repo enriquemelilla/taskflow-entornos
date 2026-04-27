@@ -1,4 +1,5 @@
 const categoryModel = require("../models/categoryModel");
+const taskModel = require("../models/taskModel");
 
 function getAllCategories(req, res) {
   categoryModel.getAllCategories((error, rows) => {
@@ -87,21 +88,35 @@ function updateCategory(req, res) {
 function deleteCategory(req, res) {
   const { id } = req.params;
 
-  categoryModel.deleteCategory(id, (error, result) => {
-    if (error) {
+  taskModel.countTasksByCategory(id, (countError, countResult) => {
+    if (countError) {
       return res.status(500).json({
-        error: "Error al eliminar la categoría"
+        error: "Error al comprobar si la categoría tiene tareas asociadas"
       });
     }
 
-    if (result.changes === 0) {
-      return res.status(404).json({
-        error: "Categoría no encontrada"
+    if (countResult.total > 0) {
+      return res.status(400).json({
+        error: "No se puede eliminar la categoría porque tiene tareas asociadas"
       });
     }
 
-    res.json({
-      message: "Categoría eliminada correctamente"
+    categoryModel.deleteCategory(id, (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          error: "Error al eliminar la categoría"
+        });
+      }
+
+      if (result.changes === 0) {
+        return res.status(404).json({
+          error: "Categoría no encontrada"
+        });
+      }
+
+      res.json({
+        message: "Categoría eliminada correctamente"
+      });
     });
   });
 }
