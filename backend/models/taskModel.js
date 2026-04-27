@@ -75,11 +75,15 @@ function deleteTask(id, callback) {
     });
   });
 }
-
+function countTasksByCategory(categoryId, callback) {
+  const sql = "SELECT COUNT(*) AS total FROM tasks WHERE category_id = ?";
+  db.get(sql, [categoryId], callback);
+}
 module.exports = {
   getAllTasks,
   getTaskById,
   createTask,
   updateTask,
-  deleteTask
+  deleteTask,
+  countTasksByCategory
 };

@@ -24,7 +24,7 @@ function initDatabase() {
         status TEXT NOT NULL DEFAULT 'pendiente',
         due_date TEXT,
         category_id INTEGER,
-        FOREIGN KEY (category_id) REFERENCES categories(id)
+        FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT
       )
     `, (error) => {
       if (error) {
