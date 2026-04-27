@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>TaskFlow</h1>
+    <p>Gestión de categorías y tareas</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Categorías</h2>
+
+      <form id="category-form">
+        <input type="hidden" id="category-id">
+
+        <div class="form-group">
+          <label for="category-name">Nombre</label>
+          <input type="text" id="category-name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category-description">Descripción</label>
+          <textarea id="category-description" rows="3"></textarea>
+        </div>
+
+        <div class="button-group">
+          <button type="submit">Guardar categoría</button>
+          <button type="button" id="cancel-category-edit" class="secondary">Cancelar edición</button>
+        </div>
+      </form>
+
+      <div id="category-message" class="message"></div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="categories-list"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
