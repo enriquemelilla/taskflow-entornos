@@ -22,11 +22,13 @@
         <div class="form-group">
           <label for="category-name">Nombre</label>
           <input type="text" id="category-name" required>
+          <div class="field-error" id="category-name-error"></div>
         </div>
 
         <div class="form-group">
           <label for="category-description">Descripción</label>
           <textarea id="category-description" rows="3"></textarea>
+          <div class="field-error" id="category-description-error"></div>
         </div>
 
         <div class="button-group">
@@ -36,7 +38,7 @@
       </form>
 
       <div id="category-message" class="message"></div>
-      
+
       <table>
         <thead>
           <tr>
@@ -61,6 +63,7 @@
           Quitar filtro
         </button>
       </div>
+
       <h2>Tareas</h2>
 
       <form id="task-form">
@@ -69,11 +72,13 @@
         <div class="form-group">
           <label for="task-title">Título</label>
           <input type="text" id="task-title" required>
+          <div class="field-error" id="task-title-error"></div>
         </div>
 
         <div class="form-group">
           <label for="task-description">Descripción</label>
           <textarea id="task-description" rows="3"></textarea>
+          <div class="field-error" id="task-description-error"></div>
         </div>
 
         <div class="form-group">
@@ -83,11 +88,13 @@
             <option value="en progreso">En progreso</option>
             <option value="completada">Completada</option>
           </select>
+          <div class="field-error" id="task-status-error"></div>
         </div>
 
         <div class="form-group">
           <label for="task-due-date">Fecha límite</label>
           <input type="date" id="task-due-date">
+          <div class="field-error" id="task-due-date-error"></div>
         </div>
 
         <div class="form-group">
@@ -95,6 +102,7 @@
           <select id="task-category" required>
             <option value="">Selecciona una categoría</option>
           </select>
+          <div class="field-error" id="task-category-error"></div>
         </div>
 
         <div class="button-group">

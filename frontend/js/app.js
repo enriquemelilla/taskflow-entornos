@@ -10,6 +10,8 @@ const categoryDescriptionInput = document.getElementById("category-description")
 const categoriesList = document.getElementById("categories-list");
 const categoryMessage = document.getElementById("category-message");
 const cancelCategoryEditBtn = document.getElementById("cancel-category-edit");
+const categoryNameError = document.getElementById("category-name-error");
+const categoryDescriptionError = document.getElementById("category-description-error");
 
 /* -------------------- TAREAS -------------------- */
 
@@ -25,12 +27,27 @@ const taskMessage = document.getElementById("task-message");
 const cancelTaskEditBtn = document.getElementById("cancel-task-edit");
 const taskCategoryFilter = document.getElementById("task-category-filter");
 const clearTaskFilterBtn = document.getElementById("clear-task-filter");
+const taskTitleError = document.getElementById("task-title-error");
+const taskDescriptionError = document.getElementById("task-description-error");
+const taskStatusError = document.getElementById("task-status-error");
+const taskDueDateError = document.getElementById("task-due-date-error");
+const taskCategoryError = document.getElementById("task-category-error");
 
-document.addEventListener("DOMContentLoaded", async () => {
+async function loadInitialData() {
+  try {
+    await Promise.allSettled([
+      loadCategories(),
+      loadTasks()
+    ]);
+  } catch (error) {
+    console.error("Error en la carga inicial:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   resetCategoryForm();
   resetTaskForm();
-  await loadCategories();
-  await loadTasks();
+  loadInitialData();
 });
 
 /* -------------------- EVENTOS CATEGORÍAS -------------------- */
@@ -43,11 +60,14 @@ categoryForm.addEventListener("submit", async (event) => {
     name: categoryNameInput.value.trim(),
     description: categoryDescriptionInput.value.trim()
   };
-
-  if (!payload.name) {
-    showCategoryMessage("El nombre de la categoría es obligatorio", "error");
+  if (!validateCategoryForm()) {
+    showCategoryMessage("Revisa los campos del formulario de categorías", "error");
     return;
   }
+  /* if (!payload.name) {
+    showCategoryMessage("El nombre de la categoría es obligatorio", "error");
+    return;
+  } */
 
   try {
     let response;
@@ -108,7 +128,7 @@ taskForm.addEventListener("submit", async (event) => {
     category_id: taskCategoryInput.value
   };
 
-  if (!payload.title) {
+  /* if (!payload.title) {
     showTaskMessage("El título es obligatorio", "error");
     return;
   }
@@ -116,8 +136,11 @@ taskForm.addEventListener("submit", async (event) => {
   if (!payload.category_id) {
     showTaskMessage("Debes seleccionar una categoría", "error");
     return;
-  }
-
+  } */
+  if (!validateTaskForm()) {
+  showTaskMessage("Revisa los campos del formulario de tareas", "error");
+  return;
+}
   payload.category_id = Number(payload.category_id);
 
   try {
@@ -241,6 +264,9 @@ async function loadCategories() {
 }
 
 function startCategoryEdit(category) {
+  clearCategoryValidation();
+  showCategoryMessage("", "");
+
   categoryIdInput.value = category.id;
   categoryNameInput.value = category.name;
   categoryDescriptionInput.value = category.description || "";
@@ -279,6 +305,7 @@ function resetCategoryForm() {
   categoryForm.reset();
   categoryIdInput.value = "";
   cancelCategoryEditBtn.style.display = "none";
+  clearCategoryValidation();
 }
 
 /* -------------------- FUNCIONES TAREAS -------------------- */
@@ -348,6 +375,9 @@ async function loadTasks() {
 }
 
 function startTaskEdit(task) {
+  clearTaskValidation();
+  showTaskMessage("", "");
+
   taskIdInput.value = task.id;
   taskTitleInput.value = task.title;
   taskDescriptionInput.value = task.description || "";
@@ -390,17 +420,30 @@ function resetTaskForm() {
   taskStatusInput.value = "pendiente";
   taskCategoryInput.value = "";
   cancelTaskEditBtn.style.display = "none";
+  clearTaskValidation();
 }
 
 /* -------------------- MENSAJES -------------------- */
 
 function showCategoryMessage(message, type) {
+  if (!message) {
+    categoryMessage.textContent = "";
+    categoryMessage.className = "message";
+    return;
+  }
+
   categoryMessage.textContent = message;
   categoryMessage.className = "message";
   categoryMessage.classList.add(type);
 }
 
 function showTaskMessage(message, type) {
+  if (!message) {
+    taskMessage.textContent = "";
+    taskMessage.className = "message";
+    return;
+  }
+
   taskMessage.textContent = message;
   taskMessage.className = "message";
   taskMessage.classList.add(type);
@@ -421,4 +464,82 @@ function escapeHtml(text) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+function clearFieldError(inputElement, errorElement) {
+  inputElement.classList.remove("input-error");
+  errorElement.textContent = "";
+}
+
+function setFieldError(inputElement, errorElement, message) {
+  inputElement.classList.add("input-error");
+  errorElement.textContent = message;
+}
+
+function clearCategoryValidation() {
+  clearFieldError(categoryNameInput, categoryNameError);
+  clearFieldError(categoryDescriptionInput, categoryDescriptionError);
+}
+
+function clearTaskValidation() {
+  clearFieldError(taskTitleInput, taskTitleError);
+  clearFieldError(taskDescriptionInput, taskDescriptionError);
+  clearFieldError(taskStatusInput, taskStatusError);
+  clearFieldError(taskDueDateInput, taskDueDateError);
+  clearFieldError(taskCategoryInput, taskCategoryError);
+}
+
+function validateCategoryForm() {
+  clearCategoryValidation();
+  let isValid = true;
+
+  const name = categoryNameInput.value.trim();
+
+  if (!name) {
+    setFieldError(categoryNameInput, categoryNameError, "El nombre es obligatorio");
+    isValid = false;
+  } else if (name.length < 2) {
+    setFieldError(categoryNameInput, categoryNameError, "El nombre debe tener al menos 2 caracteres");
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function validateTaskForm() {
+  clearTaskValidation();
+  let isValid = true;
+
+  const title = taskTitleInput.value.trim();
+  const status = taskStatusInput.value;
+  const dueDate = taskDueDateInput.value;
+  const categoryId = taskCategoryInput.value;
+
+  if (!title) {
+    setFieldError(taskTitleInput, taskTitleError, "El título es obligatorio");
+    isValid = false;
+  } else if (title.length < 2) {
+    setFieldError(taskTitleInput, taskTitleError, "El título debe tener al menos 2 caracteres");
+    isValid = false;
+  }
+
+  const validStatus = ["pendiente", "en progreso", "completada"];
+  if (!status) {
+    setFieldError(taskStatusInput, taskStatusError, "El estado es obligatorio");
+    isValid = false;
+  } else if (!validStatus.includes(status)) {
+    setFieldError(taskStatusInput, taskStatusError, "El estado seleccionado no es válido");
+    isValid = false;
+  }
+
+  if (dueDate && !/^\d{4}-\d{2}-\d{2}$/.test(dueDate)) {
+    setFieldError(taskDueDateInput, taskDueDateError, "La fecha debe tener formato válido");
+    isValid = false;
+  }
+
+  if (!categoryId) {
+    setFieldError(taskCategoryInput, taskCategoryError, "Debes seleccionar una categoría");
+    isValid = false;
+  }
+
+  return isValid;
 }
