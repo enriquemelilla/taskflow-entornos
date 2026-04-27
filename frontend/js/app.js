@@ -1,5 +1,6 @@
 const CATEGORY_API_URL = "http://localhost:3000/api/categories";
 const TASK_API_URL = "http://localhost:3000/api/tasks";
+const logoutBtn = document.getElementById("logout-btn");
 
 /* -------------------- CATEGORÍAS -------------------- */
 
@@ -32,6 +33,15 @@ const taskDescriptionError = document.getElementById("task-description-error");
 const taskStatusError = document.getElementById("task-status-error");
 const taskDueDateError = document.getElementById("task-due-date-error");
 const taskCategoryError = document.getElementById("task-category-error");
+
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("taskflowAuth");
+    localStorage.removeItem("taskflowUser");
+    window.location.href = "login.html";
+  });
+}
+
 
 async function loadInitialData() {
   try {
