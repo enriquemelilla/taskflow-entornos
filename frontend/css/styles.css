@@ -113,3 +113,10 @@ th {
   background-color: #f8d7da;
   color: #a94442;
 }
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccd2d8;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
