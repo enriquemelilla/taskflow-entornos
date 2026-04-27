@@ -120,3 +120,21 @@ select {
   border-radius: 6px;
   box-sizing: border-box;
 }
+.filter-box {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.filter-box label {
+  margin-bottom: 6px;
+}
+
+.filter-box select {
+  min-width: 220px;
+}
+.filter-box button {
+  background-color: #c0392b;
+}

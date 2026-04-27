@@ -36,7 +36,7 @@
       </form>
 
       <div id="category-message" class="message"></div>
-
+      
       <table>
         <thead>
           <tr>
@@ -51,6 +51,16 @@
     </section>
 
     <section class="panel">
+      <div class="filter-box">
+        <label for="task-category-filter">Filtrar tareas por categoría</label>
+        <select id="task-category-filter">
+          <option value="">Todas las categorías</option>
+        </select>
+
+        <button type="button" id="clear-task-filter" class="secondary">
+          Quitar filtro
+        </button>
+      </div>
       <h2>Tareas</h2>
 
       <form id="task-form">

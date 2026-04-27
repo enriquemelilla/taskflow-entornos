@@ -23,6 +23,8 @@ const taskCategoryInput = document.getElementById("task-category");
 const tasksList = document.getElementById("tasks-list");
 const taskMessage = document.getElementById("task-message");
 const cancelTaskEditBtn = document.getElementById("cancel-task-edit");
+const taskCategoryFilter = document.getElementById("task-category-filter");
+const clearTaskFilterBtn = document.getElementById("clear-task-filter");
 
 document.addEventListener("DOMContentLoaded", async () => {
   resetCategoryForm();
@@ -157,6 +159,17 @@ taskForm.addEventListener("submit", async (event) => {
   }
 });
 
+taskCategoryFilter.addEventListener("change", async () => {
+  await loadTasks();
+});
+
+clearTaskFilterBtn.addEventListener("click", async () => {
+  taskCategoryFilter.value = "";
+  await loadTasks();
+  showTaskMessage("Filtro de categoría eliminado", "success");
+});
+
+
 cancelTaskEditBtn.addEventListener("click", () => {
   resetTaskForm();
   showTaskMessage("Edición de tarea cancelada", "success");
@@ -175,6 +188,7 @@ async function loadCategories() {
 
     categoriesList.innerHTML = "";
     taskCategoryInput.innerHTML = `<option value="">Selecciona una categoría</option>`;
+    taskCategoryFilter.innerHTML = `<option value="">Todas las categorías</option>`;
 
     if (!Array.isArray(data) || data.length === 0) {
       categoriesList.innerHTML = `
@@ -202,6 +216,11 @@ async function loadCategories() {
       option.value = category.id;
       option.textContent = category.name;
       taskCategoryInput.appendChild(option);
+
+      const filterOption = document.createElement("option");
+      filterOption.value = category.id;
+      filterOption.textContent = category.name;
+      taskCategoryFilter.appendChild(filterOption);
 
       const editBtn = row.querySelector(".edit-btn");
       const deleteBtn = row.querySelector(".delete-btn");
@@ -273,18 +292,28 @@ async function loadTasks() {
       throw new Error("No se pudieron cargar las tareas");
     }
 
+    const selectedCategoryId = taskCategoryFilter.value;
+
+    let filteredTasks = data;
+
+    if (selectedCategoryId) {
+      filteredTasks = data.filter(
+        (task) => String(task.category_id) === String(selectedCategoryId)
+      );
+    }
+
     tasksList.innerHTML = "";
 
-    if (!Array.isArray(data) || data.length === 0) {
+    if (!Array.isArray(filteredTasks) || filteredTasks.length === 0) {
       tasksList.innerHTML = `
         <tr>
-          <td colspan="7">No hay tareas registradas.</td>
+          <td colspan="7">No hay tareas para mostrar.</td>
         </tr>
       `;
       return;
     }
 
-    data.forEach((task) => {
+    filteredTasks.forEach((task) => {
       const row = document.createElement("tr");
 
       row.innerHTML = `
