@@ -1,0 +1,172 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f4f6f8;
+  color: #222;
+}
+
+header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px 30px;
+}
+
+.panel {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccd2d8;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background-color: #7f8c8d;
+}
+
+button.edit-btn {
+  background-color: #2980b9;
+  margin-right: 6px;
+}
+
+button.delete-btn {
+  background-color: #c0392b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th,
+td {
+  border: 1px solid #dcdfe3;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #ecf0f1;
+}
+
+.message {
+  display: none;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.message.success {
+  display: block;
+  background-color: #dff0d8;
+  color: #2e7d32;
+}
+
+.message.error {
+  display: block;
+  background-color: #f8d7da;
+  color: #a94442;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccd2d8;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.filter-box {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.filter-box label {
+  margin-bottom: 6px;
+}
+
+.filter-box select {
+  min-width: 220px;
+}
+.filter-box button {
+  background-color: #c0392b;
+}
+.field-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin-top: 6px;
+  min-height: 16px;
+}
+
+.input-error {
+  border: 1px solid #c0392b !important;
+  background-color: #fff5f5;
+}
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-panel {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.login-panel h1 {
+  margin-top: 0;
+}
+
+header button {
+  margin-top: 10px;
+}
